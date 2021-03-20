@@ -1,0 +1,10 @@
+Flask==1.1.2
+flask-marshmallow==0.14.0
+Flask-RESTful==0.3.8
+Flask-SQLAlchemy==2.5.0
+futures==3.1.1
+marshmallow==3.10.0
+marshmallow-sqlalchemy==0.24.2
+SQLAlchemy==1.4.1
+sqlparse==0.3.0
+requests==2.25.1
