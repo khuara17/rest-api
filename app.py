@@ -48,7 +48,14 @@ class PostMethod(Resource):
             db.session.commit()
             return {'item': data.item, 'status' : data.status, 'id' : data.id},200
         except ValidationError as err:
-            return {'error' : err.messages },400
+            return {'error' : err.messages['item'] },400
+    
+    def get(self):
+        li = []
+        data  = items.query.all()
+        for i in data:
+            li.append({'he' : [i.item,i.status,i.id] })
+        return {'op' : li}
 
 
 api.add_resource(GetMethod, '/delay/<int:delay_value>')
