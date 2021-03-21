@@ -1,8 +1,8 @@
 from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
-from flask_marshmallow import Marshmallow
+from marshmallow import fields, ValidationError, Schema
 import os
-# from model import db,ma
+# from model import db
 from flask_restful import Resource, Api
 from thread import process
 
@@ -18,51 +18,41 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
 
-ma = Marshmallow(app)
+
+def validate_item(item):
+    items = ['book', 'pen', 'folder', 'bag']
+    if item not in items:
+        raise ValidationError("Item cannot be accepted")
 
 class items(db.Model):
     id = db.Column(db.Integer,primary_key=True)
     status = db.Column(db.VARCHAR(20))
     item = db.Column(db.VARCHAR(20))
 
+class ItemsSchema(Schema):
+    item = fields.String(validate=validate_item)
 
-#     def __init__(self,item):
-#         self.status = 'pending'
-#         self.item = item
-
-class itemsSchema(ma.Schema):
-    class Meta:
-        fields = ['item','status']
-
-class myapi(Resource):
+class GetMethod(Resource):
     def get(self,delay_value):
         duration = process(delay_value)
         return {'time_taken' : duration},200
-    
 
-
-class postmethod(Resource):
+class PostMethod(Resource):
     def post(self):
-        item = request.json['item']
-        data = items(item=item,status="pending")
-        db.session.add(data)
-        db.session.commit()
-        # print(data.id)
-        return {'item': data.item, 'status' : data.status, 'id' : data.id}
-
-    def get(self):
-        li = []
-        data  = items.query.all()
-        for i in data:
-            li.append({'he' : [i.item,i.status,i.id] })
-        return {'op' : li}
+        item = request.get_json()
+        val = item['item']
+        try:
+            result = ItemsSchema().load(item)
+            data = items(item=val,status="pending")
+            db.session.add(data)
+            db.session.commit()
+            return {'item': data.item, 'status' : data.status, 'id' : data.id}
+        except ValidationError as err:
+            return {'error' : err.messages }
 
 
-
-
-
-api.add_resource(myapi, '/item/<int:delay_value>')
-api.add_resource(postmethod, '/add')
+api.add_resource(GetMethod, '/item/<int:delay_value>')
+api.add_resource(PostMethod, '/add')
 
 
 if __name__ == '__main__':

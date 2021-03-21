@@ -26,10 +26,10 @@ Table items
 
 	a. item --> Required and can be one of  [book, pen, folder, bag] only, nothing else should be accepted
      (Use marshmallow to validate)
-
    e.g. {"item":"book"} is valid, but {"item":"red"} is invalid
+- Performs validations on the above request with rules stated 
 
-- Performs validations on the above request with rules stated above
+
 - Inserts the row to the table items, keep status=pending on insertion
 - Sends response code as 200 along with the response body having the id of the recently inserted item.
 
