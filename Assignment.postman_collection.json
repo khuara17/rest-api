@@ -1,0 +1,65 @@
+{
+	"info": {
+		"_postman_id": "b8619c39-af18-4543-8b3b-cf8fc282a12c",
+		"name": "Assignment",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "POST Method",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"item\" : \"bag\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/add",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"add"
+					]
+				},
+				"description": "Note :- \nChange the value in Raw section\n\nexample output :\n{\"item\":\"book\", \"status\":\"pending\",\"id\":1}"
+			},
+			"response": []
+		},
+		{
+			"name": "GET Method (delay)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/delay/3",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"delay",
+						"3"
+					]
+				},
+				"description": "e.g. {\"time_taken\":5.35}"
+			},
+			"response": []
+		}
+	]
+}

@@ -57,6 +57,7 @@ arrive We will also need to measure the time taken to execute these requests.
 
 Expectations:
 
+
 1. Create separate files for configuration e.g. DB params --> Required
 2. SQLite for database is alright -> Optional                     ####
 3. Please create a postman collection with the endpoints and share it to ease testing --> Required      

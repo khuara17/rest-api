@@ -46,12 +46,12 @@ class PostMethod(Resource):
             data = items(item=val,status="pending")
             db.session.add(data)
             db.session.commit()
-            return {'item': data.item, 'status' : data.status, 'id' : data.id}
+            return {'item': data.item, 'status' : data.status, 'id' : data.id},200
         except ValidationError as err:
-            return {'error' : err.messages }
+            return {'error' : err.messages },400
 
 
-api.add_resource(GetMethod, '/item/<int:delay_value>')
+api.add_resource(GetMethod, '/delay/<int:delay_value>')
 api.add_resource(PostMethod, '/add')
 
 
